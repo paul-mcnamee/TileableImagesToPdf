@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TileableImagesToPdf": {
+      "commandName": "Project",
+      "commandLineArgs": "-d \"C:\\\\Projects\\\\ImageTest\\\\\" -o \"C:\\\\Projects\\\\ImageTest\\\\\" -n \"pooplol\" -v true -r true -t false -s true"
+    }
+  }
+}
