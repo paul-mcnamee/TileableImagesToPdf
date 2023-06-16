@@ -9,6 +9,8 @@ using iText.Kernel.Geom;
 
 /*
  Future Considerations:
+    Add a page to use instead of having a blank page between them.
+
     Add an option to have the directory name be the name of the ouptput pdf, this would also have to keep the files separate by directory...
 
     Add pages to the beginning or end of the document
@@ -44,6 +46,10 @@ namespace TileableImagesToPdf
 
         [Option('s', "skip", Required = false, HelpText = "Skips a page between images, useful for creating a coloring book or similar style activity book which requires writing or drawing with markers which may bleed through pages.")]
         public bool? SkipPages { get; set; }
+
+        [Option("randomize", Required = false, HelpText = "Randomizes the order of the images found")]
+        public bool? RandomizeImages { get; set; }
+
     }
 
     class Program
@@ -102,6 +108,25 @@ namespace TileableImagesToPdf
              .WithNotParsed(HandleParseError);
         }
 
+        // A method that takes an array of strings and shuffles it randomly using the Fisher-Yates algorithm
+        static void ShuffleArray(string[] array)
+        {
+            // Create a random number generator
+            Random random = new Random();
+
+            // Loop through the array from the last element to the first
+            for (int i = array.Length - 1; i > 0; i--)
+            {
+                // Pick a random index between 0 and i
+                int j = random.Next(i + 1);
+
+                // Swap the elements at i and j
+                string temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+
         static void GeneratePDF(string? directory, Options opts)
         {
             // Specify the pdf template file
@@ -150,6 +175,10 @@ namespace TileableImagesToPdf
             string pdfLocation = $"template.pdf";
             LogMessage($"loading pdf from {pdfLocation}", opts);
             
+            if (opts.RandomizeImages != null && opts.RandomizeImages.Value)
+            {
+                ShuffleArray(imageFiles);
+            }
 
             // Loop through each image file
             for (int curImageCount = 0; curImageCount < imageFiles.Length; curImageCount++)
