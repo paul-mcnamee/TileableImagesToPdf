@@ -26,7 +26,7 @@ namespace TileableImagesToPdf
 {
     class Options
     {
-        [Option('d', "dirs", Required = false, HelpText = "Input directories to be processed.")]
+        [Option('d', "directories", Required = false, HelpText = "Input directories to be processed.")]
         public IEnumerable<string>? InputDirectories { get; set; }
 
         [Option('v', "verbose", Required = false, HelpText = "Prints all messages to standard output.")]

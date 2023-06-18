@@ -2,7 +2,7 @@
   "profiles": {
     "TileableImagesToPdf": {
       "commandName": "Project",
-      "commandLineArgs": "-d \"C:\\\\Projects\\\\ImageTest\\\\\" -o \"C:\\\\Projects\\\\ImageTest\\\\\" -n \"pooplol\" -v true -r true -t false -s true"
+      "commandLineArgs": "-d \"C:\\Projects\\ImageTest\\two\" -o \"C:\\\\Projects\\\\ImageTest\\\\\" -n \"vol1\" -v true -r true -t false -s true --randomize true"
     }
   }
 }

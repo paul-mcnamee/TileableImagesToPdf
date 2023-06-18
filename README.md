@@ -3,11 +3,13 @@ Creates a PDF from tileable or normal images, filling each page with the images,
 
 ## Command line args
 
-  -d, --dirs         Input directories to be processed.
+  -d, --directories  Input directories to be processed.
 
   -v, --verbose      Prints all messages to standard output.
 
   -r, --recursive    Recursively search the specified directories and sub-directories for all images to combine all images in sub-directories into one pdf
+
+  --randomize        Randomizes the order of the images found
 
   -o, --output       Specify a directory (Example: "C:\Projects\") to output the pdf files in, the directory where the images were found will be used if none is specified.
 
