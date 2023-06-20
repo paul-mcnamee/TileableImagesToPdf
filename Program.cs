@@ -9,17 +9,13 @@ using iText.Kernel.Geom;
 
 /*
  Future Considerations:
-    Add a page to use instead of having a blank page between them.
+    Add a separator page to use instead of having a blank page between them.
 
     Add an option to have the directory name be the name of the ouptput pdf, this would also have to keep the files separate by directory...
 
-    Add pages to the beginning or end of the document
-        - finish adding all of the images, and save that document
-        - append the end pages
-        - prepend the title or other attributions, call to action pages, etc.
-
     Add text to the top or bottom of each page
         - would be nice to accompany the images, this could also be used for short stories although the layout would be bland
+        - probably better to just do this by hand, it would likely look to robotic for stories 
 **/
 
 namespace TileableImagesToPdf
@@ -49,6 +45,9 @@ namespace TileableImagesToPdf
 
         [Option('s', "skip", Required = false, HelpText = "Skips a page between images, useful for creating a coloring book or similar style activity book which requires writing or drawing with markers which may bleed through pages.")]
         public bool? SkipPages { get; set; }
+
+        [Option("template", Required = false, HelpText = "Template to use to combine everything into.")]
+        public string? Template { get; set; }
 
         [Option('t', "tileable", Required = false, HelpText = "Tiles images on the pages instead of filling one page per image.")]
         public bool? Tileable { get; set; }
@@ -134,17 +133,19 @@ namespace TileableImagesToPdf
 
         static void GeneratePDF(string? directory, Options opts)
         {
-            // Specify the pdf template file
-            string templateFile = "C:\\Projects\\ImageTest\\template.pdf";
-            
             // Specify the output file name
-            string outputFile = $"C:\\Projects\\ImageTest\\{opts.PDFFileName ?? "output"}.pdf";
+            string outputFile = $"{opts.OutputDirectory ?? "C:\\Projects\\ImageTest\\"}{opts.PDFFileName ?? "output"}.pdf";
 
             FileInfo outFile = new FileInfo(outputFile);
 
             // Add directory for the outputFile if it does not exist
             if (outFile.Directory != null && !outFile.Directory.Exists)
                 outFile.Directory.Create();
+
+            // Specify the pdf template file
+            string templateFile = "template.pdf";
+            if (opts.Template != null)
+                templateFile = opts.Template;
 
             // Verify that the template file exists
             FileInfo srcFile = new FileInfo(templateFile);

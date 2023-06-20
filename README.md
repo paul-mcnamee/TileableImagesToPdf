@@ -19,6 +19,8 @@ Creates a PDF from tileable or normal images, filling each page with the images,
 
   -s, --skip           Skips a page between images, useful for creating a coloring book or similar style activity book which requires writing or drawing with markers which may bleed through pages.
 
+  --template           Template to use to combine everything into.
+
   -t, --tileable       Tiles images on the pages instead of filling one page per image.
 
   -v, --verbose        Prints all messages to standard output.

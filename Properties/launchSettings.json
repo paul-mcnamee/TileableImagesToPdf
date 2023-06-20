@@ -2,7 +2,7 @@
   "profiles": {
     "TileableImagesToPdf": {
       "commandName": "Project",
-      "commandLineArgs": "--directories \"C:\\\\Projects\\\\ImageTest\\\\Two\" --output \"C:\\\\Projects\\\\ImageTest\\\\\" --name \"vol1\" --verbose true --recursive true --tileable false --skip true --randomize false --preface \"C:\\\\Projects\\\\ImageTest\\\\preface.pdf\" --backmatter \"C:\\\\Projects\\\\ImageTest\\\\backmatter.pdf\""
+      "commandLineArgs": "--directories \"C:\\\\Projects\\\\ImageTest\\\\Two\" --output \"C:\\\\Projects\\\\ImageTest\\\\Output\\\\\" --name \"vol1\" --verbose true --recursive true --tileable false --skip true --randomize true --preface \"C:\\\\Projects\\\\ImageTest\\\\TemplateFiles\\\\preface.pdf\" --backmatter \"C:\\\\Projects\\\\ImageTest\\\\TemplateFiles\\\\backmatter.pdf\" --template \"C:\\\\Projects\\\\ImageTest\\\\TemplateFiles\\\\template.pdf\""
     }
   }
 }
