@@ -49,6 +49,12 @@ namespace TileableImagesToPdf
 
         [Option("randomize", Required = false, HelpText = "Randomizes the order of the images found")]
         public bool? RandomizeImages { get; set; }
+        
+        [Option('p', "preface", Required = false, HelpText = "Adds the specified pdf to the beginning of the book.")]
+        public string? Preface { get; set; }
+
+        [Option('b', "backmatter", Required = false, HelpText = "Adds the specified pdf to the end of the book.")]
+        public string? BackMatter { get; set; }
 
     }
 
@@ -179,6 +185,17 @@ namespace TileableImagesToPdf
             {
                 ShuffleArray(imageFiles);
             }
+            
+            int offset = 0;
+            if (opts.Preface != null)
+            {
+                // Load the preface
+                PdfDocument prefaceDoc = new PdfDocument(new PdfReader(opts.Preface));
+                offset = prefaceDoc.GetNumberOfPages();
+
+                // Copy each page to the new document
+                prefaceDoc.CopyPagesTo(1, offset, resultDoc);
+            }
 
             // Loop through each image file
             for (int curImageCount = 0; curImageCount < imageFiles.Length; curImageCount++)
@@ -202,7 +219,7 @@ namespace TileableImagesToPdf
                 float pageWidth = pageSize.GetWidth();
                 float pageHeight = pageSize.GetHeight();
 
-                int pageToAddImageTo = curImageCount + 1 + (opts.SkipPages.HasValue ? curImageCount : 0);
+                int pageToAddImageTo = offset + curImageCount + 1 + (opts.SkipPages.HasValue ? curImageCount : 0);
 
                 // Check if the image is tileable
                 if (opts.Tileable != null && opts.Tileable.Value)
@@ -255,6 +272,15 @@ namespace TileableImagesToPdf
                     //doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
                     resultDoc.AddNewPage(pageSize);
                 }
+            }
+
+            if (opts.BackMatter != null)
+            {
+                // Load the BackMatter
+                PdfDocument backMatterDoc = new PdfDocument(new PdfReader(opts.BackMatter));
+                
+                // Copy each page to the new document
+                backMatterDoc.CopyPagesTo(1, backMatterDoc.GetNumberOfPages(), resultDoc);
             }
 
             // Close the document and the pdf objects
