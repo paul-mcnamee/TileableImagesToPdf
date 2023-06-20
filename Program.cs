@@ -26,36 +26,35 @@ namespace TileableImagesToPdf
 {
     class Options
     {
+        [Option('b', "backmatter", Required = false, HelpText = "Adds the specified pdf to the end of the book.")]
+        public string? BackMatter { get; set; }
+
         [Option('d', "directories", Required = false, HelpText = "Input directories to be processed.")]
         public IEnumerable<string>? InputDirectories { get; set; }
-
-        [Option('v', "verbose", Required = false, HelpText = "Prints all messages to standard output.")]
-        public bool? Verbose { get; set; }
-
-        [Option('r', "recursive", Required = false, HelpText = "Recursively search the specified directories and sub-directories for all images to combine all images in sub-directories into one pdf")]
-        public bool? Recursive { get; set; }
-
-        [Option('o', "output", Required = false, HelpText = "Specify a directory (Example: \"C:\\Projects\\\") to output the pdf files in, the directory where the images were found will be used if none is specified.")]
-        public string? OutputDirectory { get; set; }
 
         [Option('n', "name", Required = false, HelpText = "Specify a file name for the output pdf. Defaults to \"output\" if none is specified")]
         public string? PDFFileName { get; set; }
 
-        [Option('t', "tileable", Required = false, HelpText = "Tiles images on the pages instead of filling one page per image.")]
-        public bool? Tileable { get; set; }
+        [Option('o', "output", Required = false, HelpText = "Specify a directory (Example: \"C:\\Projects\\\") to output the pdf files in, the directory where the images were found will be used if none is specified.")]
+        public string? OutputDirectory { get; set; }
+
+        [Option('p', "preface", Required = false, HelpText = "Adds the specified pdf to the beginning of the book.")]
+        public string? Preface { get; set; }
+
+        [Option("randomize", Required = false, HelpText = "Randomizes the order of the images found")]
+        public bool? RandomizeImages { get; set; }
+
+        [Option('r', "recursive", Required = false, HelpText = "Recursively search the specified directories and sub-directories for all images to combine all images in sub-directories into one pdf")]
+        public bool? Recursive { get; set; }
 
         [Option('s', "skip", Required = false, HelpText = "Skips a page between images, useful for creating a coloring book or similar style activity book which requires writing or drawing with markers which may bleed through pages.")]
         public bool? SkipPages { get; set; }
 
-        [Option("randomize", Required = false, HelpText = "Randomizes the order of the images found")]
-        public bool? RandomizeImages { get; set; }
-        
-        [Option('p', "preface", Required = false, HelpText = "Adds the specified pdf to the beginning of the book.")]
-        public string? Preface { get; set; }
+        [Option('t', "tileable", Required = false, HelpText = "Tiles images on the pages instead of filling one page per image.")]
+        public bool? Tileable { get; set; }
 
-        [Option('b', "backmatter", Required = false, HelpText = "Adds the specified pdf to the end of the book.")]
-        public string? BackMatter { get; set; }
-
+        [Option('v', "verbose", Required = false, HelpText = "Prints all messages to standard output.")]
+        public bool? Verbose { get; set; }
     }
 
     class Program
