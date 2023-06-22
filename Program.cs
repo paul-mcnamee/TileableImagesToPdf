@@ -34,8 +34,8 @@ namespace TileableImagesToPdf
         [Option('o', "output", Required = false, HelpText = "Specify a directory (Example: \"C:\\Projects\\\") to output the pdf files in, the directory where the images were found will be used if none is specified.")]
         public string? OutputDirectory { get; set; }
 
-        [Option('p', "preface", Required = false, HelpText = "Adds the specified pdf to the beginning of the book.")]
-        public string? Preface { get; set; }
+        [Option("frontmatter", Required = false, HelpText = "Adds the specified pdf to the beginning of the book.")]
+        public string? FrontMatter { get; set; }
 
         [Option("randomize", Required = false, HelpText = "Randomizes the order of the images found")]
         public bool? RandomizeImages { get; set; }
@@ -187,14 +187,14 @@ namespace TileableImagesToPdf
             }
             
             int offset = 0;
-            if (opts.Preface != null)
+            if (opts.FrontMatter != null)
             {
-                // Load the preface
-                PdfDocument prefaceDoc = new PdfDocument(new PdfReader(opts.Preface));
-                offset = prefaceDoc.GetNumberOfPages();
+                // Load the front matter
+                PdfDocument frontMatterDoc = new PdfDocument(new PdfReader(opts.FrontMatter));
+                offset = frontMatterDoc.GetNumberOfPages();
 
                 // Copy each page to the new document
-                prefaceDoc.CopyPagesTo(1, offset, resultDoc);
+                frontMatterDoc.CopyPagesTo(1, offset, resultDoc);
             }
 
             // Loop through each image file
