@@ -8,6 +8,18 @@ using iText.Layout.Element;
 using iText.Kernel.Geom;
 
 /*
+Debug Params
+
+Full Working Example
+--directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1234" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
+
+Test
+--directories "C:\\Projects\\ImageTest\\Three" --output "C:\\Projects\\ImageTest\\Output\\" --name "test1234" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
+ 
+ **/
+
+
+/*
  Future Considerations:
     Add a separator page to use instead of having a blank page between them.
 
@@ -79,7 +91,7 @@ namespace TileableImagesToPdf
         {
             LogMessage("Starting!", opts);
 
-            if (opts.InputDirectories != null)
+            if (opts.InputDirectories != null && opts.InputDirectories.Count() > 0)
             {
                 foreach (string directory in opts.InputDirectories)
                     GeneratePDF(directory, opts);
@@ -165,7 +177,19 @@ namespace TileableImagesToPdf
 
             Document doc = new Document(resultDoc, pageSize);
 
-            doc.SetMargins(0, 0, 0, 0);
+            // Theoretically this is what it should be since the template was generated with photoshop, but the observed size is different 
+            // 0.125 inches extra for page bleed
+            //      0.125 / 2 = 0.0625 per side
+            //      1 inch is 72 points
+            //      0.0625 * 72 = 4.5
+            //float marginSize = 4.5f;
+
+            // The observed width and height of the document were 621 and 801 respectively
+            // Since we want the same ratio, we need (0.125 / 8.625) * 621 and (0.125 / 11.125) * 801 which is 9
+
+            // Setting the margins on the document appears to do nothing since the image is set to absolute, see image.ScaleAbsolute
+            float marginSize = 9f;
+            doc.SetMargins(marginSize, marginSize, marginSize, marginSize);
 
             string curDir = Directory.GetCurrentDirectory();
             if (directory != null)
@@ -173,6 +197,7 @@ namespace TileableImagesToPdf
                 curDir = directory;
             }
 
+            // Retrieve images from specified directory that are acceptable formats to load
             var formatFilter = new string[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp", "svg" };
             var imageFiles = GetFilesFrom(curDir, formatFilter, opts.Recursive ?? false);
 
@@ -212,12 +237,14 @@ namespace TileableImagesToPdf
                 Image image = new Image(ImageDataFactory.Create(imageFiles[curImageCount]));
                                                 
                 // Get the width and height of the image
+                // Image size was seemingly in pixels
                 float imageWidth = image.GetImageWidth();
                 float imageHeight = image.GetImageHeight();
 
                 // Get the width and height of the page
-                float pageWidth = pageSize.GetWidth();
-                float pageHeight = pageSize.GetHeight();
+                // Width and height of the page are in points - 72 points per inch?
+                float pageWidth = pageSize.GetWidth(); //template width is read as 621
+                float pageHeight = pageSize.GetHeight(); //template height is read as 801
 
                 int pageToAddImageTo = offset + curImageCount + 1 + (opts.SkipPages.HasValue ? curImageCount : 0);
 
@@ -258,11 +285,11 @@ namespace TileableImagesToPdf
                     //image.ScaleToFit(pageWidth, pageHeight);
 
                     // Set the image to fit the page size regardless of aspect ratio so there is no white space
-                    // For some reason there was space at the top of the page without adding height even though the margins were 0, hence the magic 8 offset. 7 was too little.
-                    image.ScaleAbsolute(pageWidth, pageHeight + 8);
+                    // Note: Previously before adding marginSize, for some reason there was space at the top of the page without adding height even though the margins were 0, hence the magic 8 offset. 7 was too little.
+                    image.ScaleAbsolute(pageWidth - (marginSize * 2), pageHeight - (marginSize * 2));
 
                     // Add the original image to the document
-                    image.SetFixedPosition(pageToAddImageTo, 0, 0);
+                    image.SetFixedPosition(pageToAddImageTo, marginSize, marginSize);
                     doc.Add(image);
                 }
 
