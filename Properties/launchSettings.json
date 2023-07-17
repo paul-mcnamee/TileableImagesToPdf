@@ -2,7 +2,7 @@
   "profiles": {
     "TileableImagesToPdf": {
       "commandName": "Project",
-      "commandLineArgs": "--directories \"G:\\\\My Drive\\\\Books\\\\Coloring Books\\\\Stained Glass\\\\Vol1\\\\\" --output \"G:\\\\My Drive\\\\Books\\\\Coloring Books\\\\Stained Glass\\\\Vol1\\\\\" --name \"vol1234\" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter \"G:\\\\My Drive\\\\Books\\\\Template Pages\\\\frontmatter.pdf\" --template \"G:\\\\My Drive\\\\Books\\\\Template Pages\\\\template.pdf\""
+      "commandLineArgs": "--directories \"G:\\\\My Drive\\\\Books\\\\Coloring Books\\\\Patterns\\\\Vol2\\\\Images\\\\\" --output \"G:\\\\My Drive\\\\Books\\\\Coloring Books\\\\Patterns\\\\Vol2\\\\\" --name \"vol2_nobleed\" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter \"G:\\\\My Drive\\\\Books\\\\Template Pages\\\\frontmatter_nobleed.pdf\" --template \"G:\\\\My Drive\\\\Books\\\\Template Pages\\\\template_nobleed.pdf\""
     }
   }
 }

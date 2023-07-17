@@ -7,20 +7,46 @@ using iText.Layout;
 using iText.Layout.Element;
 using iText.Kernel.Geom;
 
-/*
-Debug Params
+/* resources 
 
-Full Working Example
+    Amazon KDP Manuscript guidelines https://kdp.amazon.com/en_US/help/topic/G202145060
+    Amazon KDP Sizing Info - https://kdp.amazon.com/en_US/help/topic/GVBQ3CMEQW3W2VL6
+ **/
+
+/* Debug Params
+
+
+Full Working Examples
+--directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1234" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
 --directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1234" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
 
-Test
---directories "C:\\Projects\\ImageTest\\Three" --output "C:\\Projects\\ImageTest\\Output\\" --name "test1234" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
- 
+--directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\" --name "vol1_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\" --name "vol2_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
+
+Originally the uploads to amazon were being rejected, seemingly because there were white pixels around the edges of the pages or maybe because the images did not have a margin big enough around the images, no one will ever know... the page size was the same and was using the recommended size in the email...
+--directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1_black" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\" --name "vol1_black" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\" --name "vol2_black" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
+
+--directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1_white" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_white.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\" --name "vol1_white" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_white.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\" --name "vol2_white" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_white.pdf"
+
+
+--directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\" --name "vol1_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\" --name "vol2_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
+
+
+Making new frontmatter -- combining 2 pdf files with an empty directory of images
+--directories "C:\\Projects\\ImageTest\\Two" --output "G:\\My Drive\\Books\\Template Pages\\" --name "frontmatter" --verbose true --recursive true --tileable false --skip false --randomize false --frontmatter "G:\\My Drive\\Books\\Template Pages\\copyright.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf" --backmatter "G:\\My Drive\\Books\\Template Pages\\belongsto.pdf"
+--directories "C:\\Projects\\ImageTest\\Two" --output "G:\\My Drive\\Books\\Template Pages\\" --name "frontmatter_nobleed" --verbose true --recursive true --tileable false --skip false --randomize false --frontmatter "G:\\My Drive\\Books\\Template Pages\\copyright_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf" --backmatter "G:\\My Drive\\Books\\Template Pages\\belongsto_nobleed.pdf"
  **/
 
 
-/*
- Future Considerations:
+/*  Future Considerations:
+
     Add a separator page to use instead of having a blank page between them.
 
     Add an option to have the directory name be the name of the ouptput pdf, this would also have to keep the files separate by directory...
@@ -174,20 +200,13 @@ namespace TileableImagesToPdf
 
             var srcPageSizeRect = srcDoc.GetLastPage().GetPageSize();
             PageSize pageSize = new PageSize(srcPageSizeRect);
-
+            var templatePage = srcDoc.GetFirstPage();
             Document doc = new Document(resultDoc, pageSize);
 
-            // Theoretically this is what it should be since the template was generated with photoshop, but the observed size is different 
-            // 0.125 inches extra for page bleed
-            //      0.125 / 2 = 0.0625 per side
-            //      1 inch is 72 points
-            //      0.0625 * 72 = 4.5
-            //float marginSize = 4.5f;
-
-            // The observed width and height of the document were 621 and 801 respectively
-            // Since we want the same ratio, we need (0.125 / 8.625) * 621 and (0.125 / 11.125) * 801 which is 9
-
-            // Setting the margins on the document appears to do nothing since the image is set to absolute, see image.ScaleAbsolute
+            // 0.375 inches required for inside gutter and outside margins if using bleed -- https://kdp.amazon.com/en_US/help/topic/GVBQ3CMEQW3W2VL6
+            // 1 inch is 72 points
+            // Setting the margins on the document appears to do nothing since the image is set to absolute
+            // We account for this by adding the margin to the image size and position as well, see image.ScaleAbsolute
             float marginSize = 9f;
             doc.SetMargins(marginSize, marginSize, marginSize, marginSize);
 
@@ -220,16 +239,33 @@ namespace TileableImagesToPdf
 
                 // Copy each page to the new document
                 frontMatterDoc.CopyPagesTo(1, offset, resultDoc);
+                frontMatterDoc.Close();
             }
 
             // Loop through each image file
             for (int curImageCount = 0; curImageCount < imageFiles.Length; curImageCount++)
             {
+                int pageToAddImageTo = offset + curImageCount + 1 + (opts.SkipPages.HasValue ? curImageCount : 0);
+
                 // If this is the last page then do not make a new page
                 if (curImageCount < imageFiles.Length)
                 {
                     LogMessage($"Adding a new page to the document, currently it has {resultDoc.GetNumberOfPages()} pages!", opts);
-                    resultDoc.AddNewPage(pageSize);
+
+                    // DELETE UNUSED CODE
+                    //srcDoc.CopyPagesTo(1, 1, resultDoc); // This actually copies the page but for some reason amazon thinks there is an error when it is uploaded...
+                    //resultDoc.AddPage(srcDoc.GetFirstPage())
+                    //templatePage.CopyTo(resultDoc);
+                    //resultDoc.AddPage(templatePage);
+
+                    // Working
+                    //resultDoc.AddNewPage(pageSize);
+
+                    // Copy the template page to the new document
+                    PdfDocument templateDoc = new PdfDocument(new PdfReader(templateFile));
+                    templateDoc.CopyPagesTo(1, 1, resultDoc);
+                    templateDoc.Close();
+
                     LogMessage($"Page was added, now it has {resultDoc.GetNumberOfPages()} pages!", opts);
                 }
 
@@ -244,9 +280,7 @@ namespace TileableImagesToPdf
                 // Get the width and height of the page
                 // Width and height of the page are in points - 72 points per inch?
                 float pageWidth = pageSize.GetWidth(); //template width is read as 621
-                float pageHeight = pageSize.GetHeight(); //template height is read as 801
-
-                int pageToAddImageTo = offset + curImageCount + 1 + (opts.SkipPages.HasValue ? curImageCount : 0);
+                float pageHeight = pageSize.GetHeight(); //template height is read as 810
 
                 // Check if the image is tileable
                 if (opts.Tileable != null && opts.Tileable.Value)
@@ -280,7 +314,7 @@ namespace TileableImagesToPdf
                     // TODO: might have to scale the image if the aspect ratios are super off, if so check here:
                     //      https://kb.itextpdf.com/home/it7kb/examples/large-image-examples
 
-                    // These preserve the aspect ratio
+                    // These lines would alternatively preserve the aspect ratio if that is ever desired in the future...
                     //image.SetAutoScale(true);
                     //image.ScaleToFit(pageWidth, pageHeight);
 
@@ -296,8 +330,21 @@ namespace TileableImagesToPdf
                 if (opts.SkipPages != null && opts.SkipPages.Value && curImageCount < imageFiles.Length)
                 {
                     // Add an empty page to the document before adding the image page
+
+                    // DELETE UNUSED CODE
                     //doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
-                    resultDoc.AddNewPage(pageSize);
+                    //srcDoc.CopyPagesTo(1, 1, resultDoc); // This actually copies the page but for some reason amazon thinks there is an error when it is uploaded...
+                    //resultDoc.AddPage(srcDoc.GetFirstPage());
+                    //resultDoc.AddPage(templatePage);
+                    //templatePage.CopyTo(resultDoc);
+
+                    // Working
+                    //resultDoc.AddNewPage(pageSize);
+
+                    // Copy the template page to the new document
+                    PdfDocument templateDoc = new PdfDocument(new PdfReader(templateFile));
+                    templateDoc.CopyPagesTo(1, 1, resultDoc);
+                    templateDoc.Close();
                 }
             }
 
@@ -308,6 +355,7 @@ namespace TileableImagesToPdf
                 
                 // Copy each page to the new document
                 backMatterDoc.CopyPagesTo(1, backMatterDoc.GetNumberOfPages(), resultDoc);
+                backMatterDoc.Close();
             }
 
             // Close the document and the pdf objects
