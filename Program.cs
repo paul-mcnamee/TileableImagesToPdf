@@ -7,44 +7,6 @@ using iText.Layout;
 using iText.Layout.Element;
 using iText.Kernel.Geom;
 
-/* resources 
-
-    Amazon KDP Manuscript guidelines https://kdp.amazon.com/en_US/help/topic/G202145060
-    Amazon KDP Sizing Info - https://kdp.amazon.com/en_US/help/topic/GVBQ3CMEQW3W2VL6
- **/
-
-/* Debug Params
-
-
-Full Working Examples
---directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1234" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
---directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1234" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
-
---directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
---directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\" --name "vol1_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
---directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\" --name "vol2_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
-
-Originally the uploads to amazon were being rejected, seemingly because there were white pixels around the edges of the pages or maybe because the images did not have a margin big enough around the images, no one will ever know... the page size was the same and was using the recommended size in the email...
---directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1_black" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
---directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\" --name "vol1_black" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
---directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\" --name "vol2_black" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
-
---directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1_white" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_white.pdf"
---directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\" --name "vol1_white" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_white.pdf"
---directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\" --name "vol2_white" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_white.pdf"
-
-
---directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
---directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\" --name "vol1_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
---directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\" --name "vol2_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
-
-
-Making new frontmatter -- combining 2 pdf files with an empty directory of images
---directories "C:\\Projects\\ImageTest\\Two" --output "G:\\My Drive\\Books\\Template Pages\\" --name "frontmatter" --verbose true --recursive true --tileable false --skip false --randomize false --frontmatter "G:\\My Drive\\Books\\Template Pages\\copyright.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf" --backmatter "G:\\My Drive\\Books\\Template Pages\\belongsto.pdf"
---directories "C:\\Projects\\ImageTest\\Two" --output "G:\\My Drive\\Books\\Template Pages\\" --name "frontmatter_nobleed" --verbose true --recursive true --tileable false --skip false --randomize false --frontmatter "G:\\My Drive\\Books\\Template Pages\\copyright_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf" --backmatter "G:\\My Drive\\Books\\Template Pages\\belongsto_nobleed.pdf"
- **/
-
-
 /*  Future Considerations:
 
     Add a separator page to use instead of having a blank page between them.
@@ -55,6 +17,11 @@ Making new frontmatter -- combining 2 pdf files with an empty directory of image
         - would be nice to accompany the images, this could also be used for short stories although the layout would be bland
         - probably better to just do this by hand, it would likely look to robotic for stories 
 **/
+
+/* resources 
+    Amazon KDP Manuscript guidelines https://kdp.amazon.com/en_US/help/topic/G202145060
+    Amazon KDP Sizing Info - https://kdp.amazon.com/en_US/help/topic/GVBQ3CMEQW3W2VL6
+ **/
 
 namespace TileableImagesToPdf
 {
@@ -252,15 +219,6 @@ namespace TileableImagesToPdf
                 {
                     LogMessage($"Adding a new page to the document, currently it has {resultDoc.GetNumberOfPages()} pages!", opts);
 
-                    // DELETE UNUSED CODE
-                    //srcDoc.CopyPagesTo(1, 1, resultDoc); // This actually copies the page but for some reason amazon thinks there is an error when it is uploaded...
-                    //resultDoc.AddPage(srcDoc.GetFirstPage())
-                    //templatePage.CopyTo(resultDoc);
-                    //resultDoc.AddPage(templatePage);
-
-                    // Working
-                    //resultDoc.AddNewPage(pageSize);
-
                     // Copy the template page to the new document
                     PdfDocument templateDoc = new PdfDocument(new PdfReader(templateFile));
                     templateDoc.CopyPagesTo(1, 1, resultDoc);
@@ -329,18 +287,6 @@ namespace TileableImagesToPdf
 
                 if (opts.SkipPages != null && opts.SkipPages.Value && curImageCount < imageFiles.Length)
                 {
-                    // Add an empty page to the document before adding the image page
-
-                    // DELETE UNUSED CODE
-                    //doc.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
-                    //srcDoc.CopyPagesTo(1, 1, resultDoc); // This actually copies the page but for some reason amazon thinks there is an error when it is uploaded...
-                    //resultDoc.AddPage(srcDoc.GetFirstPage());
-                    //resultDoc.AddPage(templatePage);
-                    //templatePage.CopyTo(resultDoc);
-
-                    // Working
-                    //resultDoc.AddNewPage(pageSize);
-
                     // Copy the template page to the new document
                     PdfDocument templateDoc = new PdfDocument(new PdfReader(templateFile));
                     templateDoc.CopyPagesTo(1, 1, resultDoc);
@@ -364,3 +310,35 @@ namespace TileableImagesToPdf
         }
     }
 }
+
+
+/* Debug Params
+
+
+Full Working Examples
+--directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1234" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1234" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
+
+--directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\" --name "vol1_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\" --name "vol2_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
+
+Originally the uploads to amazon were being rejected, seemingly because there were white pixels around the edges of the pages or maybe because the images did not have a margin big enough around the images, no one will ever know... the page size was the same and was using the recommended size in the email...
+--directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1_black" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\" --name "vol1_black" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\" --name "vol2_black" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf"
+
+--directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1_white" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_white.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\" --name "vol1_white" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_white.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\" --name "vol2_white" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_white.pdf"
+
+
+--directories "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Stained Glass\\Vol1\\" --name "vol1_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol1\\" --name "vol1_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
+--directories "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\Images\\" --output "G:\\My Drive\\Books\\Coloring Books\\Patterns\\Vol2\\" --name "vol2_nobleed" --verbose true --recursive true --tileable false --skip true --randomize true --frontmatter "G:\\My Drive\\Books\\Template Pages\\frontmatter_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf"
+
+
+Making new frontmatter -- combining 2 pdf files with an empty directory of images
+--directories "C:\\Projects\\ImageTest\\Two" --output "G:\\My Drive\\Books\\Template Pages\\" --name "frontmatter" --verbose true --recursive true --tileable false --skip false --randomize false --frontmatter "G:\\My Drive\\Books\\Template Pages\\copyright.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template.pdf" --backmatter "G:\\My Drive\\Books\\Template Pages\\belongsto.pdf"
+--directories "C:\\Projects\\ImageTest\\Two" --output "G:\\My Drive\\Books\\Template Pages\\" --name "frontmatter_nobleed" --verbose true --recursive true --tileable false --skip false --randomize false --frontmatter "G:\\My Drive\\Books\\Template Pages\\copyright_nobleed.pdf" --template "G:\\My Drive\\Books\\Template Pages\\template_nobleed.pdf" --backmatter "G:\\My Drive\\Books\\Template Pages\\belongsto_nobleed.pdf"
+ **/
